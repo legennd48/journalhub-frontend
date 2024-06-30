@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Auth from './components/Auth';
+import LandingPage from './components/LandingPage';
+import NewEntry from './components/NewEntry';
+import ViewEntry from './components/ViewEntry';
+import Navbar from './components/Navbar';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [entries, setEntries] = useState([]);
+
+  const createEntry = (newEntry) => {
+    setEntries([...entries, { ...newEntry, id: entries.length + 1 }]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="app-container">
+        <Navbar />
+        <Routes>
+          <Route path="/" exact element={<Auth />} />
+          <Route path="/landing" element={<LandingPage entries={entries} />} />
+          <Route path="/new-entry" element={<NewEntry createEntry={createEntry} />} />
+          <Route path="/view-entry/:id" element={<ViewEntry entries={entries} />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

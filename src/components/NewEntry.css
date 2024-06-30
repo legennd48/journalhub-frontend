@@ -1,0 +1,63 @@
+.new-entry-container {
+    max-width: 80%;
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.new-entry-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form input, form button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form input {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+}
+
+form button {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: gray;
+    color: white;
+}
+
+.ql-container {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.ql-editor {
+    min-height: 150px;
+}
+
+.ql-toolbar {
+    border: 1px solid white;
+}

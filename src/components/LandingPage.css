@@ -1,0 +1,82 @@
+/* LandingPage.css */
+
+.entries-list {
+    margin-top: 20px;
+}
+
+.entry {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.entry h2 {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.entry p {
+    margin: 5px 0;
+}
+
+.entry button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.entry button:hover {
+    background-color: #0056b3;
+}
+
+/* Modal styles */
+.modal {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal h2 {
+    margin-top: 0;
+}
+
+.modal button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.modal button:hover {
+    background-color: #c82333;
+}
+
+.entry-content {
+    word-wrap: break-word; /* Ensures text wrapping */
+}
+
+.entry-content img {
+    max-width: 100%; /* Ensures images fit within the popup */
+    height: auto;
+    display: block;
+    margin: 10px 0;
+}
