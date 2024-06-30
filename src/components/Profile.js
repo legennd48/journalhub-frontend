@@ -5,54 +5,79 @@ import './Profile.css'; // Add your custom styles here
 
 const Profile = () => {
     const [profileData, setProfileData] = useState(null);
-    const userId = localStorage.getItem('userId');
+    const [entriesCount, setEntriesCount] = useState(0);
     const navigate = useNavigate();
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/profile/${userId}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch profile data');
-                }
+                const response = await fetch(`http://localhost:5000/profile/${userId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 const result = await response.json();
                 setProfileData(result.user);
             } catch (error) {
                 console.error('Error fetching profile data:', error);
             }
         };
-        
-        fetchProfileData();
-    }, [userId]);
 
-    const handleDeleteProfile = async () => {
+        const fetchEntriesCount = async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/user/entries/${userId}`);
+                const result = await response.json();
+                setEntriesCount(result.user_entries);
+            } catch (error) {
+                console.error('Error fetching entries count:', error);
+            }
+        };
+
+        fetchProfileData();
+        fetchEntriesCount();
+    }, [userId, token]);
+
+    const handleDelete = async () => {
         try {
             const response = await fetch(`http://localhost:5000/profile/${userId}`, {
                 method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
-            if (!response.ok) {
-                throw new Error('Failed to delete profile');
+
+            if (response.ok) {
+                localStorage.clear();
+                navigate('/welcome'); // Redirect to welcome page after deletion
+            } else {
+                console.error('Failed to delete profile');
             }
-            const result = await response.json();
-            console.log(result.message);
-            localStorage.clear(); // Clear local storage
-            navigate('/'); // Redirect to home page after deletion
         } catch (error) {
             console.error('Error deleting profile:', error);
         }
     };
 
-    if (!profileData) {
-        return <div>Loading...</div>;
-    }
+    const handleEdit = () => {
+        navigate(`/edit-profile/${userId}`);
+    };
 
     return (
-        <div className="profile-container">
-            <h2>User Profile</h2>
-            <p><strong>Name:</strong> {profileData.name}</p>
-            <p><strong>Email:</strong> {profileData.email}</p>
-            <p><strong>User ID:</strong> {profileData._id}</p>
-            <button onClick={handleDeleteProfile}>Delete Profile</button>
+        <div className="profile-page">
+            {profileData ? (
+                <div className="profile-container">
+                    <h2>Profile</h2>
+                    <p><strong>User ID:</strong> {profileData._id}</p>
+                    <p><strong>Name:</strong> {profileData.name}</p>
+                    <p><strong>Email:</strong> {profileData.email}</p>
+                    <p><strong>Total Entries:</strong> {entriesCount}</p>
+                    <button onClick={handleEdit}>Edit Profile</button>
+                    <button onClick={handleDelete}>Delete Profile</button>
+                </div>
+            ) : (
+                <p>Loading...</p>
+            )}
         </div>
     );
 };

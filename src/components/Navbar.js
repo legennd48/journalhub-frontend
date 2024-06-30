@@ -1,3 +1,4 @@
+// Navbar.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
@@ -5,9 +6,9 @@ import './Navbar.css';
 const Navbar = () => {
     return (
         <nav className="navbar">
-            <Link to="/landing" className="project-name">JournalHub</Link>
-            <Link to="/landing" className="nav-link">Home</Link>
-            <Link to="/new-entry" className="nav-link">New Entry</Link>
+            <Link to="/welcome" className='project-name'>JournalHub</Link>
+            <Link to="/dashboard" className="nav-link">Dashboard</Link>
+            <Link to="/profile" className="nav-link">Profile</Link>
             <Link to="/" className="nav-link">Logout</Link>
         </nav>
     );

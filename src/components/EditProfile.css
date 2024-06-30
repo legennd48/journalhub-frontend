@@ -1,0 +1,65 @@
+/* EditProfile.css */
+.edit-profile-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+}
+
+.edit-profile-container {
+    max-width: 600px;
+    width: 100%;
+    background-color: #222;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.edit-profile-container h2 {
+    margin-bottom: 20px;
+    font-size: 36px;
+}
+
+.edit-profile-container .form-group {
+    margin-bottom: 20px;
+}
+
+.edit-profile-container .form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.edit-profile-container .form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #333;
+    color: #fff;
+}
+
+.edit-profile-container .form-group .error {
+    color: red;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.edit-profile-container button {
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.edit-profile-container button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
