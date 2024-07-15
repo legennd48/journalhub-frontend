@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
-import FormInput from './FormInput'; // Import FormInput component
-import './Auth.css'; // Add your custom styles here
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import FormInput from './FormInput';
+import './Auth.css';
 
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -92,21 +94,25 @@ const Auth = () => {
                 const profileResult = await profileResponse.json();
                 localStorage.setItem('userName', profileResult.user.name);
 
+                toast.success('Login successful');
                 navigate('/landing');
             } else {
                 // Handle successful registration
                 console.log('Registration successful:', result);
+                toast.success('Registration successful');
                 setIsLogin(true);
             }
         } catch (error) {
             setLoading(false);
             console.error('Error:', error.message);
             setErrors({ apiError: error.message });
+            toast.error(error.message);
         }
     };
 
     return (
         <div className="auth-page">
+            <ToastContainer />
             <div className="auth-container">
                 <h2>{isLogin ? 'Login' : 'Register'}</h2>
                 {loading && <ClipLoader />}
@@ -151,7 +157,7 @@ const Auth = () => {
                     <button type="submit">{isLogin ? 'Login' : 'Register'}</button>
                 </form>
                 <button onClick={toggleForm}>
-                    {isLogin ? 'Switch to Register' : 'Switch to Login'}
+                    {isLogin ? 'Register' : 'Login'}
                 </button>
             </div>
         </div>

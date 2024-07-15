@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import './LandingPage.css';
 
@@ -10,6 +10,8 @@ const LandingPage = () => {
     const [entries, setEntries] = useState([]);
     const [selectedEntry, setSelectedEntry] = useState(null);
     const [userName, setUserName] = useState('');
+    const [showAlert, setShowAlert] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -86,11 +88,49 @@ const LandingPage = () => {
         setSelectedEntry(null);
     };
 
+    const deleteEntry = async (entryId) => {
+        const confirmation = window.confirm('Are you sure you want to delete this entry? This action cannot be undone.');
+        if (confirmation) {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                console.error("Token is missing");
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:5000/journalEntries/${entryId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    setEntries(entries.filter(entry => entry._id !== entryId));
+                    if (selectedEntry && selectedEntry._id === entryId) {
+                        closePopup();
+                    }
+                    setShowAlert(true);
+                    setTimeout(() => setShowAlert(false), 4000); // Hide alert after 4 seconds
+                } else {
+                    const errorData = await response.json();
+                    console.error("Failed to delete entry", errorData.error);
+                }
+            } catch (error) {
+                console.error("Error deleting entry", error);
+            }
+        }
+    };
+
+    const navigateToUpdateEntry = (id) => {
+        navigate(`/update-entry/${id}`);
+    };
+
     return (
         <div>
-            <h1>Welcome, {userName}</h1>
-            <h2>My Journal Entries</h2>
-            <Link to="/new-entry">Create New Entry</Link>
+            <h1>{userName}'s Journal Entries</h1>
+            <Link to="/new-entry" className="create-entry-button">Create New Entry</Link>
             <div className="entries-list">
                 {entries.length === 0 ? (
                     <p>You have no entries yet!</p>
@@ -100,6 +140,8 @@ const LandingPage = () => {
                             <h2>{entry.title}</h2>
                             <p>Date: {new Date(entry.createdAt).toLocaleDateString()}</p>
                             <button onClick={() => openPopup(entry)}>View Entry</button>
+                            <button onClick={() => navigateToUpdateEntry(entry._id)}>Update Entry</button>
+                            <button onClick={() => deleteEntry(entry._id)} className="delete-button">Delete Entry</button>
                         </div>
                     ))
                 )}
@@ -118,7 +160,14 @@ const LandingPage = () => {
                     <div dangerouslySetInnerHTML={{ __html: selectedEntry.content }} className="entry-content" />
                     {selectedEntry.file && <a href={selectedEntry.file} download>Download File</a>}
                     <button onClick={closePopup}>Close</button>
+                    <button onClick={() => deleteEntry(selectedEntry._id)} className="delete-button">Delete Entry</button>
                 </Modal>
+            )}
+
+            {showAlert && (
+                <div className="alert">
+                    Entry has been successfully deleted.
+                </div>
             )}
         </div>
     );

@@ -9,9 +9,22 @@
 .nav-link {
     color: white;
     text-decoration: none;
+    cursor: pointer; /* Ensure cursor is pointer for consistency */
 }
 
 .nav-link:hover {
+    color: gray;
+    text-decoration: underline;
+}
+
+/* Ensuring span elements styled as links */
+span.nav-link {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+span.nav-link:hover {
     color: gray;
     text-decoration: underline;
 }

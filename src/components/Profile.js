@@ -1,4 +1,3 @@
-// Profile.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Profile.css'; // Add your custom styles here
@@ -6,6 +5,7 @@ import './Profile.css'; // Add your custom styles here
 const Profile = () => {
     const [profileData, setProfileData] = useState(null);
     const [entriesCount, setEntriesCount] = useState(0);
+    const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
@@ -40,22 +40,28 @@ const Profile = () => {
     }, [userId, token]);
 
     const handleDelete = async () => {
-        try {
-            const response = await fetch(`http://localhost:5000/profile/${userId}`, {
-                method: 'DELETE',
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+        const confirmation = window.confirm('Are you sure you want to delete your profile? This action cannot be undone.');
+        if (confirmation) {
+            try {
+                const response = await fetch(`http://localhost:5000/profile/${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
 
-            if (response.ok) {
-                localStorage.clear();
-                navigate('/welcome'); // Redirect to welcome page after deletion
-            } else {
-                console.error('Failed to delete profile');
+                if (response.ok) {
+                    localStorage.clear();
+                    setShowAlert(true);
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 4000); // Navigate after 4 seconds
+                } else {
+                    console.error('Failed to delete profile');
+                }
+            } catch (error) {
+                console.error('Error deleting profile:', error);
             }
-        } catch (error) {
-            console.error('Error deleting profile:', error);
         }
     };
 
@@ -77,6 +83,12 @@ const Profile = () => {
                 </div>
             ) : (
                 <p>Loading...</p>
+            )}
+
+            {showAlert && (
+                <div className="alert">
+                    Your account has been deleted
+                </div>
             )}
         </div>
     );

@@ -1,6 +1,5 @@
 .new-entry-container {
     max-width: 80%;
-    width: 90%;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid white;
@@ -56,8 +55,17 @@ form button:hover {
 
 .ql-editor {
     min-height: 150px;
+    text-align: center; /* Center align text by default */
 }
 
 .ql-toolbar {
     border: 1px solid white;
+}
+
+.ql-picker.ql-emoji-picker, .ql-picker.ql-emoji-picker > span {
+    color: white; /* Set emoji picker color to white */
+}
+
+.ql-snow .ql-picker-label.ql-emoji-picker, .ql-snow .ql-picker-item.ql-emoji-picker {
+    color: white; /* Set emoji picker items color to white */
 }

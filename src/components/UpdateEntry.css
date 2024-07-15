@@ -1,0 +1,45 @@
+/* UpdateEntry.css */
+
+.update-entry-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.update-entry-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgb(5, 5, 5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.update-entry-form label {
+    margin-bottom: 10px;
+}
+
+.update-entry-form input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.update-entry-button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.update-entry-button:hover {
+    background-color: #0056b3;
+}

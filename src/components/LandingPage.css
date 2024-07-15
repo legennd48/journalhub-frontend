@@ -25,6 +25,11 @@
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    margin-right: 10px; /* Add space between buttons */
+}
+
+.entry button:last-child {
+    margin-right: 0; /* Remove margin from the last button */
 }
 
 .entry button:hover {
@@ -71,12 +76,65 @@
 }
 
 .entry-content {
-    word-wrap: break-word; /* Ensures text wrapping */
+    word-wrap: break-word;
 }
 
 .entry-content img {
-    max-width: 100%; /* Ensures images fit within the popup */
+    max-width: 100%;
     height: auto;
     display: block;
     margin: 10px 0;
+}
+
+.create-entry-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.create-entry-button:hover {
+    background-color: #0056b3;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px; /* Adjust as needed */
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+/* Modal styles for delete button */
+.modal .delete-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.modal .delete-button:hover {
+    background-color: #c82333;
+}
+
+.alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px 20px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    z-index: 1000;
 }
